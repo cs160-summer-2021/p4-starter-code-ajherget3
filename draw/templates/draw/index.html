@@ -25,7 +25,13 @@
     var tool = new paper.Tool();
     var path = new paper.Path();
     var uid = Date.now() % 10000;
-    path.strokeColor = "red";
+    //path.strokeColor = "red";
+    path.strokeColor = paper.Color.random();
+    var red = path.strokeColor.red;
+    var green = path.strokeColor.green;
+    var blue = path.strokeColor.blue;
+
+
 
     // getting the URL (you may want to use for Exercise 3)
     var url = window.location.href;
@@ -34,15 +40,36 @@
         'ws://' + window.location.host + '/ws/draw');
 
     tool.onMouseMove = function(event) { //http://paperjs.org/reference/tool/ path examples
+        var prevPoint = path.getNearestPoint(event.point);
        path.add(event.point);
+
        // You may need to add code here if you want to pass any other information.
-       socket.send("{\"x\" : " + event.point.x + ", \"y\" : " + event.point.y + ", \"uid\" : " + uid + "}" );
+       socket.send("{\"x\" : " + event.point.x + 
+                    ", \"y\" : " + event.point.y + 
+                    ", \"uid\" : " + uid + 
+                    ", \"red\" : " + red +
+                    ", \"green\" : " + green +
+                    ", \"blue\" : " + blue +
+                    ", \"prevX\" : " + prevPoint.x +
+                    ", \"prevY\" : " + prevPoint.y +
+                    "}" );
+       //socket.send([event.point.x + event.point.y]);
     }
 
     socket.onmessage = function(receivedMessage) {
         var received = JSON.parse(receivedMessage.data);
-        console.log("Received: " + JSON.stringify(received));
+        console.log(received);
+        //console.log("Received: " + JSON.stringify(received));
         // You will probably want to add some code here to draw more lines.
+        if (url === "http://127.0.0.1:8000/draw/?size=large") {
+            var point0 = new paper.Point(received.prevX, received.prevY);
+            var point1 = new paper.Point(received.x, received.y);
+            var path2 = new paper.Path();
+            path2.strokeColor = new paper.Color(received.red, received.green, received.blue);
+            path2.add(point0);
+            path2.add(point1);
+        }
+        
     }
 
     socket.onclose = function(e) {
