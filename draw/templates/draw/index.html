@@ -9,18 +9,32 @@
     <link rel="stylesheet" type="text/css" href="{% static 'draw/vendor/bootstrap/css/bootstrap.min.css' %}">
     <script type="text/javascript" src="{% static 'draw/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'draw/vendor/paper/paper-full.min.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static '/draw/vendor/bootstrap/css/bootstrap.css' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;300;400;600&display=swap" rel="stylesheet">
     <style type="text/css">
     </style>
 
 </head>
 <body>
-    <div> Trip Summary </div>
-    <div id="printlikes"> </div>
-    <div id="printdislikes"> </div>
+    <img src="https://i.ibb.co/Rcm9pjt/Screen-Shot-2021-07-23-at-10-09-35-AM.png" alt="Screen-Shot-2021-07-23-at-10-09-35-AM">
+    <div id="eventRanked1"> </div>
+    <div id="eventRanked2"> </div>
 </body>
 <script>
-    var likes = 0;
-    var dislikes = 0;
+
+    var event1 = {
+        likes:0,
+        dislikes:0,
+        tripName:"Manhattan Beach"
+    };
+
+    var event2 = {
+        likes:3,
+        dislikes:1,
+        tripName:'Venice beach'
+    };
     var url = window.location.href;
 
     var socket = new WebSocket(
@@ -42,11 +56,23 @@
             path2.add(point1);
         }
         if (url === "http://127.0.0.1:8000/draw/index") {
-            likes = likes + received.likes;
-            dislikes = dislikes + received.dislikes;
+            if (event1.tripName === received.tripName) {
+                event1.likes += received.likes;
+                event1.dislikes += received.dislikes;
+            } else {
+                event2.likes += received.likes;
+                event2.dislikes += received.dislikes;
+            }
+            if (event2.likes - event2.dislikes >= event1.likes - event1.dislikes) {
+                temp = {...event1};
+                event1 = {likes:event2.likes, dislikes:event2.dislikes, tripName:event2.tripName};
+                event2 = {likes:temp.likes, dislikes:temp.dislikes, tripName:temp.tripName};
+
+            }
         }
-        document.getElementById("printlikes").innerHTML = "Likes: " + likes;
-        document.getElementById("printdislikes").innerHTML = "Dislikes: " + dislikes;
+        document.getElementById("eventRanked1").innerHTML = "Top Rated Trip: " + event1.tripName + ", Likes: " + event1.likes + ", Dislikes: " + event1.dislikes;
+        document.getElementById("eventRanked2").innerHTML = "Top Rated Trip: " + event2.tripName + ", Likes: " + event2.likes + ", Dislikes: " + event2.dislikes;
+
     }
 
     socket.onclose = function(e) {

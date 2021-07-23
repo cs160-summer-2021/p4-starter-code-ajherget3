@@ -9,18 +9,37 @@
     <link rel="stylesheet" type="text/css" href="{% static 'draw/vendor/bootstrap/css/bootstrap.min.css' %}">
     <script type="text/javascript" src="{% static 'draw/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'draw/vendor/paper/paper-full.min.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static '/draw/vendor/bootstrap/css/bootstrap.css' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;300;400;600&display=swap" rel="stylesheet">
     <style type="text/css">
     </style>
 
 </head>
 <body>
-    <div> Trip Summary </div>
-    <div> Destination: Manhattan Beach</div>
-    <div>
-        <p> Did you enjoy the trip? </p>
-        <button id="like" onclick="likeFunc()"> Like </button>
-        <button id="dislike" onclick="dislikeFunc()"> Dislike </button>
+    <div id="summarytitle" class="container-fluid"> Trip Summary </div>
+    <div id="summaryphoto" class="container-fluid"> 
+        <a id="usermap" href="https://ibb.co/WW9GkcR"><img src="https://i.ibb.co/ynTd68x/usermap.jpg" alt="usermap" ></a>
     </div>
+    <div id="summarytext" class="container-fluid"> 
+        <p> Destination: Manhattan Beach </p>
+        <p> Distance Traveled: 3 miles</p>
+        <p> Cost of Trip: $9.25 </p>
+        <p> Time elapsed: 2 hours, 21 minutes </p>
+    </div>
+    <div id="summaryquestion" class="container-fluid"> 
+        <p> Did you enjoy the trip? </p>
+        <button class="buttons" id="like" onclick="likeFunc()"> Like </button>
+        <button class="buttons" id="dislike" onclick="dislikeFunc()"> Dislike </button>
+    </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <p>Did you enjoy the trip? Make sure to click the like or dislike button!</p>
+        </div>
+      
+      </div>
 </body>
 <script type="text/javascript">
     var likes = 0;
@@ -33,17 +52,21 @@
     function likeFunc() {
         likes = 1;
         dislikes = 0;
+        tripName = 'Manhattan Beach';
         socket.send("{\"likes\" : " + likes +
                     ", \"dislikes\" : " + dislikes +
-                    "}" );
+                    ", \"tripName\" : \"" + tripName +
+                    "\"}" );
     }
 
     function dislikeFunc() {
         likes = 0;
         dislikes = 1;
+        tripName = 'Manhattan Beach';
         socket.send("{\"likes\" : " + likes +
                     ", \"dislikes\" : " + dislikes +
-                    "}" );
+                    ", \"tripName\" : \"" + tripName +
+                    "\"}" );
     }
 
     socket.onmessage = function(receivedMessage) {
@@ -58,5 +81,94 @@
         console.error('Chat socket closed unexpectedly');
     };
 
+    var modal = document.getElementById("myModal");
+    var span = document.getElementsByClassName("close")[0];
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
 </script>
+<style type="text/css">
+    #summarytitle {
+        margin-top: 10%;
+        text-align: center;
+        font-family: Raleway;
+        font-size: 100px;
+        font-weight: 600;
+        color: cornflowerblue;
+    }
+    #summarytext {
+        margin-left: 5%;
+        text-align: left;
+        font-family: Raleway;
+        font-size: 50px;
+        color: cornflowerblue;
+    }
+    #summaryquestion {
+        text-align: center;
+        font-family: Raleway;
+        font-size: 50px;
+        color: cornflowerblue;
+    }
+
+    .buttons {
+        font-family: Raleway;
+        color: cornflowerblue;
+        background-color: mintcream;
+        border-radius: 15px;
+        border-color: cornflowerblue;
+        border-width: 5px;
+    }
+
+    #usermap {
+        margin: auto;
+        border-width: 10px;
+        border-color: black;
+    }
+
+    #summaryphoto {
+        margin: auto;
+    }
+
+
+    .modal {
+        /*remove line below for group without popup*/
+        display: block;
+        position: fixed;
+        z-index: 1; 
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        padding-top: 400px;
+    }
+    .modal-content {
+        background-color: mintcream;
+        margin: auto;
+        border-color: cornflowerblue;
+        border-width: 10px;
+        border-radius: 25px;
+        width: 50%;
+        text-align: center;
+        font-family: Raleway;
+        font-size: 50px;
+        color: cornflowerblue;
+        font-weight: 300;
+        padding: 20px;
+    }
+    .close {
+        color: cornflowerblue;
+        font-size: 100px;
+        font-weight: bold;
+        text-align: right;
+        padding-right: 35px;
+        font-weight: 300;
+    }
+    .close:hover, .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+</style>
 </html>
