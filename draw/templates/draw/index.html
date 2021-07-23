@@ -26,22 +26,7 @@
     var socket = new WebSocket(
         'ws://' + window.location.host + '/ws/draw');
 
-    tool.onMouseMove = function(event) { //http://paperjs.org/reference/tool/ path examples
-        var prevPoint = path.getNearestPoint(event.point);
-       path.add(event.point);
-
-       // You may need to add code here if you want to pass any other information.
-       socket.send("{\"x\" : " + event.point.x + 
-                    ", \"y\" : " + event.point.y + 
-                    ", \"uid\" : " + uid + 
-                    ", \"red\" : " + red +
-                    ", \"green\" : " + green +
-                    ", \"blue\" : " + blue +
-                    ", \"prevX\" : " + prevPoint.x +
-                    ", \"prevY\" : " + prevPoint.y +
-                    "}" );
-       //socket.send([event.point.x + event.point.y]);
-    }
+    
 
     socket.onmessage = function(receivedMessage) {
         var received = JSON.parse(receivedMessage.data);
@@ -61,7 +46,7 @@
             dislikes = dislikes + received.dislikes;
         }
         document.getElementById("printlikes").innerHTML = "Likes: " + likes;
-        document.getElementById("printdislikes").innerHTML = "Dislikes" + dislikes;
+        document.getElementById("printdislikes").innerHTML = "Dislikes: " + dislikes;
     }
 
     socket.onclose = function(e) {
