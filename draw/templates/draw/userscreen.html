@@ -22,35 +22,33 @@
         <button id="dislike" onclick="dislikeFunc()"> Dislike </button>
     </div>
 </body>
-<script>
-
-
+<script type="text/javascript">
+    var likes = 0;
+    var dislikes = 0;
     var url = window.location.href;
 
     var socket = new WebSocket(
         'ws://' + window.location.host + '/ws/draw');
 
-    tool.onMouseMove = function(event) { //http://paperjs.org/reference/tool/ path examples
-
-
-        // You may need to add code here if you want to pass any other information.
-       socket.send("{\"x\" : " + event.point.x +
-                    ", \"y\" : " + event.point.y +
-                    ", \"uid\" : " + uid +
-                    ", \"red\" : " + red +
-                    ", \"green\" : " + green +
-                    ", \"blue\" : " + blue +
-                    ", \"prevX\" : " + prevPoint.x +
-                    ", \"prevY\" : " + prevPoint.y +
+    function likeFunc() {
+        likes = 1;
+        dislikes = 0;
+        socket.send("{\"likes\" : " + likes +
+                    ", \"dislikes\" : " + dislikes +
                     "}" );
-       //socket.send([event.point.x + event.point.y]);
+    }
+
+    function dislikeFunc() {
+        likes = 0;
+        dislikes = 1;
+        socket.send("{\"likes\" : " + likes +
+                    ", \"dislikes\" : " + dislikes +
+                    "}" );
     }
 
     socket.onmessage = function(receivedMessage) {
         var received = JSON.parse(receivedMessage.data);
         console.log(received);
-        //console.log("Received: " + JSON.stringify(received));
-        // You will probably want to add some code here to draw more lines.
         if (url === "http://127.0.0.1:8000/draw/?size=large") {
 
         }
@@ -59,18 +57,6 @@
     socket.onclose = function(e) {
         console.error('Chat socket closed unexpectedly');
     };
-
-</script>
-<script type="text/javascript">
-    var canvas = document.getElementById('myCanvas');
-        // zoom in and out are working
-    function likeFunc() {
-
-    }
-
-    function dislikeFunc() {
-
-    }
 
 </script>
 </html>

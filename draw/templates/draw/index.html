@@ -15,25 +15,12 @@
 </head>
 <body>
     <!-- You may change the dimensions of this canvas -->
-    <canvas id="myCanvas" width="750px" height="750px"></canvas>
+    <div id="printlikes"> </div>
+    <div id="printdislikes"> </div>
 </body>
 <script>
-
-    // setting up the canvas and one paper tool
-    var canvas = document.getElementById('myCanvas');
-    paper.setup(canvas);
-    var tool = new paper.Tool();
-    var path = new paper.Path();
-    var uid = Date.now() % 10000;
-    //path.strokeColor = "red";
-    path.strokeColor = paper.Color.random();
-    var red = path.strokeColor.red;
-    var green = path.strokeColor.green;
-    var blue = path.strokeColor.blue;
-
-
-
-    // getting the URL (you may want to use for Exercise 3)
+    var likes = 0;
+    var dislikes = 0;
     var url = window.location.href;
 
     var socket = new WebSocket(
@@ -69,7 +56,12 @@
             path2.add(point0);
             path2.add(point1);
         }
-        
+        if (url === "http://127.0.0.1:8000/draw/index") {
+            likes = likes + received.likes;
+            dislikes = dislikes + received.dislikes;
+        }
+        document.getElementById("printlikes").innerHTML = "Likes: " + likes;
+        document.getElementById("printdislikes").innerHTML = "Dislikes" + dislikes;
     }
 
     socket.onclose = function(e) {
