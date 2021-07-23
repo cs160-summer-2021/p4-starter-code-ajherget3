@@ -4,8 +4,8 @@ from django.shortcuts import render
 def index(request):
     return render(request, 'draw/index.html')
 
-def user(request):
-    return render(request, 'draw/user.html')
+def userscreen(request):
+    return render(request, 'draw/userscreen.html')
 
 def room(request, room_name):
     return render(request, 'draw/room.html', {
