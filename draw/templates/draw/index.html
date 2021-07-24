@@ -18,12 +18,19 @@
 
 </head>
 <body>
-    <img src="https://i.ibb.co/Rcm9pjt/Screen-Shot-2021-07-23-at-10-09-35-AM.png" alt="Screen-Shot-2021-07-23-at-10-09-35-AM">
-    <div id="eventRanked1"> </div>
-    <div id="eventRanked2"> </div>
+    <div class="container">
+        <div class="col">
+            <div id="eventRanked1"> </div>
+            <div id="eventRanked2"> </div>
+        </div>
+        <div class="col">
+        <img src="https://i.ibb.co/Rcm9pjt/Screen-Shot-2021-07-23-at-10-09-35-AM.png" alt="Screen-Shot-2021-07-23-at-10-09-35-AM">
+        </div>
+    </div>  
 </body>
 <script>
 
+        
     var event1 = {
         likes:0,
         dislikes:0,
@@ -35,6 +42,11 @@
         dislikes:1,
         tripName:'Venice beach'
     };
+
+    document.getElementById("eventRanked1").innerHTML = "Ranked 1 Trip: " + event1.tripName + ", Likes: " + event1.likes + ", Dislikes: " + event1.dislikes;
+    document.getElementById("eventRanked2").innerHTML = "Ranked 2 Trip: " + event2.tripName + ", Likes: " + event2.likes + ", Dislikes: " + event2.dislikes;
+
+
     var url = window.location.href;
 
     var socket = new WebSocket(
@@ -80,4 +92,8 @@
     };
 
 </script>
+<style type="text/css">
+    
+
+</style>
 </html>
