@@ -17,16 +17,24 @@
     </style>
 
 </head>
-<body>
-    <div class="container">
-        <div class="col">
-            <div id="eventRanked1"> </div>
-            <div id="eventRanked2"> </div>
-        </div>
-        <div class="col">
-        <img src="https://i.ibb.co/Rcm9pjt/Screen-Shot-2021-07-23-at-10-09-35-AM.png" alt="Screen-Shot-2021-07-23-at-10-09-35-AM">
-        </div>
-    </div>  
+<body style="background:#006B8F;">
+    <div id="summarytitle" class="container-fluid"> Trending Trips </div>
+    <div id="rowbox" class="container-fluid"> 
+        <div id="row1" class="container-fluid row">
+            <div class="col" id="locationtext">
+                <div id="eventRanked1" class = "mainText"> </div>
+                <br> 
+                <div id="eventRanked2" class = "mainText"> </div>
+                <br>
+                <div class="mainText">3. LA County Museum of Art (Likes: 1, Dislikes: 0)</div>
+                <br>
+                <div class="mainText">4. The Getty (Likes: 1, Dislikes: 1)</div>
+            </div>
+            <div class="col" id="map">
+            <img src="https://i.ibb.co/Rcm9pjt/Screen-Shot-2021-07-23-at-10-09-35-AM.png" alt="Screen-Shot-2021-07-23-at-10-09-35-AM">
+            </div>
+        </div>  
+    </div>
 </body>
 <script>
 
@@ -40,11 +48,11 @@
     var event2 = {
         likes:3,
         dislikes:1,
-        tripName:'Venice beach'
+        tripName:'Venice Beach'
     };
 
-    document.getElementById("eventRanked1").innerHTML = "Ranked 1 Trip: " + event1.tripName + ", Likes: " + event1.likes + ", Dislikes: " + event1.dislikes;
-    document.getElementById("eventRanked2").innerHTML = "Ranked 2 Trip: " + event2.tripName + ", Likes: " + event2.likes + ", Dislikes: " + event2.dislikes;
+    document.getElementById("eventRanked1").innerHTML = "1. " + event1.tripName + " (Likes: " + event1.likes + ", Dislikes: " + event1.dislikes + ")";
+    document.getElementById("eventRanked2").innerHTML = "2. " + event2.tripName + " (Likes: " + event2.likes + ", Dislikes: " + event2.dislikes+ ")";
 
 
     var url = window.location.href;
@@ -93,7 +101,34 @@
 
 </script>
 <style type="text/css">
-    
 
+    #summarytitle {
+        margin-top: 10%;
+        text-align: center;
+        font-family: Raleway;
+        font-size: 100px;
+        font-weight: 600;
+        color: white;
+    }
+    .mainText {
+        text-align: left;
+        font-family: Raleway;
+        font-size: 30px;
+        color: white;
+        font-weight: 600;
+    }
+    #row1 {
+        border: solid rgb(192, 201, 216, .5) 10px;
+        background-color: rgb(192, 201, 216, .5);
+        border-radius: 15px;
+        padding-top: 12.5px;
+        padding-bottom: 12.5px;
+    }
+
+    #rowbox {
+        justify-content: center;
+        padding-left: 40px;
+
+    }
 </style>
 </html>

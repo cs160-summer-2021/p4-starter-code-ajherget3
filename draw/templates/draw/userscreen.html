@@ -17,7 +17,7 @@
     </style>
 
 </head>
-<body>
+<body style="background:#006B8F;">
     <div id="summarytitle" class="container-fluid"> Trip Summary </div>
     <div id="summaryphoto" class="container-fluid"> 
         <a id="usermap" href="https://ibb.co/WW9GkcR"><img src="https://i.ibb.co/ynTd68x/usermap.jpg" alt="usermap" ></a>
@@ -95,39 +95,47 @@
         font-family: Raleway;
         font-size: 100px;
         font-weight: 600;
-        color: cornflowerblue;
+        color: white;
     }
     #summarytext {
         margin-left: 5%;
         text-align: left;
         font-family: Raleway;
         font-size: 50px;
-        color: cornflowerblue;
+        font-weight: 600;
+        color: white;
     }
     #summaryquestion {
         text-align: center;
         font-family: Raleway;
         font-size: 50px;
-        color: cornflowerblue;
+        font-weight: 600;
+        color: white;
     }
 
     .buttons {
         font-family: Raleway;
-        color: cornflowerblue;
-        background-color: mintcream;
+        color: white;
+        background-color: rgb(192, 201, 216, .5);
         border-radius: 15px;
-        border-color: cornflowerblue;
+        border-color: rgb(192, 201, 216, .5);
         border-width: 5px;
+        font-weight: 600;
+
     }
 
     #usermap {
         margin: auto;
-        border-width: 10px;
-        border-color: black;
+        border: solid rgb(192, 201, 216, .5) 30px;
+        border-radius: 25px;
+        background-color: rgb(192, 201, 216, .5);
     }
 
     #summaryphoto {
+        display: flex;
         margin: auto;
+        justify-content: center;
+        padding: 20px;
     }
 
 
@@ -143,21 +151,21 @@
         padding-top: 400px;
     }
     .modal-content {
-        background-color: mintcream;
+        background-color: rgb(192, 201, 216, .9);
         margin: auto;
-        border-color: cornflowerblue;
+        border-color: rgb(192, 201, 216, .9);
         border-width: 10px;
         border-radius: 25px;
-        width: 50%;
+        width: 85%;
         text-align: center;
         font-family: Raleway;
-        font-size: 50px;
-        color: cornflowerblue;
-        font-weight: 300;
+        font-size: 80px;
+        color: white;
+        font-weight: 600;
         padding: 20px;
     }
     .close {
-        color: cornflowerblue;
+        color: red;
         font-size: 100px;
         font-weight: bold;
         text-align: right;
